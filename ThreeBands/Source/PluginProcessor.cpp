@@ -153,6 +153,9 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
+        buffer.applyGain(channel, 0, totalNumInputChannels, 0.5);
+        // this doesn't do what I expected it to. it just crackles.
+        
 
         // ..do something to the data...
     }
