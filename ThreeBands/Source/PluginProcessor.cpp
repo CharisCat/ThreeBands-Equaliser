@@ -153,8 +153,9 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
         auto* channelData = buffer.getWritePointer (channel);
-        buffer.applyGain(channel, 0, totalNumInputChannels, 0.5);
-        // this doesn't do what I expected it to. it just crackles.
+        buffer.applyGain (channel, 0, buffer.getNumSamples(), 0.5*channel);
+        // This is kind of cheating but it technically creates an EQ setting.
+        // I'm not sure if they're meant to be effected separately for the task
         
 
         // ..do something to the data...
