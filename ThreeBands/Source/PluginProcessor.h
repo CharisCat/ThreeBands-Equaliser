@@ -16,11 +16,16 @@
 class ThreeBandsAudioProcessor  : public juce::AudioProcessor
 {
 public:
+    
     //==============================================================================
     ThreeBandsAudioProcessor();
     ~ThreeBandsAudioProcessor() override;
 
     //==============================================================================
+    
+    //This is the value that is set by slider1 in the GUI
+    float slider1Value = 400.0f;
+    
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
