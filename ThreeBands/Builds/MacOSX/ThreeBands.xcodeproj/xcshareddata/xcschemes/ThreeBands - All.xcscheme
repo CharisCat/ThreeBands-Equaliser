@@ -42,6 +42,7 @@
       allowLocationSimulation = "YES">
       <PathRunnable
          runnableDebuggingMode = "0"
+         BundleIdentifier = "com.roli.juce.pluginhost"
          FilePath = "/Users/charis/Documents/AudioPluginHost.app">
       </PathRunnable>
    </LaunchAction>

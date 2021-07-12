@@ -23,9 +23,6 @@ public:
 
     //==============================================================================
     
-    //This is the value that is set by slider1 in the GUI
-    float slider1Value = 400.0f;
-    
     void prepareToPlay (double sampleRate, int samplesPerBlock) override;
     void releaseResources() override;
 
@@ -58,6 +55,11 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
+    juce::IIRFilter lowShelf;
+    juce::IIRFilter midPeaking;
+    juce::IIRFilter highShelf;
+    float slider1Value = 400.0f; //This is the value that is set by slider1 in the GUI
+    
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeBandsAudioProcessor)

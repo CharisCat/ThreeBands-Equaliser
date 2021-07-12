@@ -26,6 +26,7 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     slider1.setPopupDisplayEnabled (true, false, this);
     slider1.setTextValueSuffix (" Gain");
     slider1.setValue(1.0);
+    slider1.setSkewFactor(0.2);
     
     // this function adds the slider to the editor
     addAndMakeVisible (&slider1);
@@ -58,7 +59,7 @@ void ThreeBandsAudioProcessorEditor::resized()
     slider1.setBounds (40, 30, 20, getHeight() - 60);
 }
 
-void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider *slider)
+void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
-    processor.slider1Value = slider1.getValue();
+    audioProcessor.slider1Value = slider1.getValue(); //I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.
 }

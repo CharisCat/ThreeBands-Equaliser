@@ -134,15 +134,29 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     juce::ScopedNoDenormals noDenormals;
     auto totalNumInputChannels  = getTotalNumInputChannels();
     auto totalNumOutputChannels = getTotalNumOutputChannels();
+    double sampleRate = getSampleRate();
 
+    // If we want to control our filter with a slider - it needs to be in the process block
+    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 500.0f,  2.0f, 2.0f));
+    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 750.0f, 2.0f, 0.1f));
+    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 1000.0f, 2.0f, 2.0f));
+    
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+    
+    auto* channelData = buffer.getWritePointer (0);
+    lowShelf.processSamples(channelData, buffer.getNumSamples());
+    midPeaking.processSamples(channelData, buffer.getNumSamples());
+    highShelf.processSamples(channelData, buffer.getNumSamples());
+    
     // In case we have more outputs than inputs, this code clears any output
     // channels that didn't contain input data, (because these aren't
     // guaranteed to be empty - they may contain garbage).
     // This is here to avoid people getting screaming feedback
     // when they first compile a plugin, but obviously you don't need to keep
     // this code if your algorithm always overwrites all the output channels.
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
+    //for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        //buffer.clear (i, 0, buffer.getNumSamples());
 
     // This is the place where you'd normally do the guts of your plugin's
     // audio processing...
@@ -150,16 +164,16 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     // the samples and the outer loop is handling the channels.
     // Alternatively, you can process the samples with the channels
     // interleaved by keeping the same state.
-    for (int channel = 0; channel < totalNumInputChannels; ++channel)
-    {
-        auto* channelData = buffer.getWritePointer (channel);
-        buffer.applyGain (channel, 0, buffer.getNumSamples(), 0.5*channel);
+    //for (int channel = 0; channel < totalNumInputChannels; ++channel)
+    //{
+        //auto* channelData = buffer.getWritePointer (channel);
+        //buffer.applyGain (channel, 0, buffer.getNumSamples(), 0.5*channel);
         // This is kind of cheating but it technically creates an EQ setting.
         // I'm not sure if they're meant to be effected separately for the task
         
 
         // ..do something to the data...
-    }
+    //}
 }
 
 //==============================================================================
