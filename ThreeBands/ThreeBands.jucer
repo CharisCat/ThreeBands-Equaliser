@@ -2,7 +2,8 @@
 
 <JUCERPROJECT id="WQQRRU" name="ThreeBands" projectType="audioplug" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              version="0.1.1" companyName="Charis Cat // Child of an Android">
+              version="0.1.1" companyName="Charis Cat // Child of an Android"
+              cppLanguageStandard="17">
   <MAINGROUP id="utoiQB" name="ThreeBands">
     <GROUP id="{69C5DB34-D96B-CCB2-FF18-F9ED89E7DFEF}" name="Source">
       <FILE id="BdE3DK" name="PluginProcessor.cpp" compile="1" resource="0"
