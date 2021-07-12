@@ -58,6 +58,9 @@ public:
     juce::IIRFilter highShelf;
     float slider1Value = 400.0f; //This is the value that is set by slider1 in the GUI
     
+    static juce::AudioProcessorValueTreeState:::ParameterLayout createParameterLayout();
+    juce::AudioProcessorValueTreeState apvts {*this, nullptr, "Parameters", createParameterLayout()}
+    
 private:
     //==============================================================================
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeBandsAudioProcessor)
