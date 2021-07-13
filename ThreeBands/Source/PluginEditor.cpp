@@ -58,5 +58,11 @@ void ThreeBandsAudioProcessorEditor::resized()
 
 void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
-    audioProcessor.slider1Value = slider1.getValue(); //I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.
+    
+    if (slider == &slider1)
+    {
+        audioProcessor.slider1Gain = slider1.getValue();
+    }
+    
+//I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.
 }

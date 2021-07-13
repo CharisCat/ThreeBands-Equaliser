@@ -13,7 +13,7 @@
 /**
 */
 class ThreeBandsAudioProcessorEditor  : public juce::AudioProcessorEditor,
-                                        private juce::Slider::Listener
+                                        public juce::Slider::Listener
 {
 public:
     ThreeBandsAudioProcessorEditor (ThreeBandsAudioProcessor&);
@@ -22,11 +22,11 @@ public:
     //==============================================================================
     void paint (juce::Graphics&) override;
     void resized() override;
+    
+    void sliderValueChanged (juce::Slider *slider) override;
 
 private:
-    
-    void sliderValueChanged (juce::Slider* slider) override;
-    
+
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ThreeBandsAudioProcessor& audioProcessor;
