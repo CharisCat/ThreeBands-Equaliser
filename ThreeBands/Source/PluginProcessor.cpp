@@ -153,7 +153,7 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         
         for (int sample = 0; sample < buffer.getNumSamples(); ++sample) //goes through all samples in buffer
         {
-            channelData [sample] = channelData[sample] * slider1Gain;
+            channelData [sample] = channelData[sample] * juce::Decibels::decibelsToGain(slider1Gain); //multiplies samples by the slider value to attenuate volume, measured in decibels
         }
         
         

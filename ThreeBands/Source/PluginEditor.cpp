@@ -19,11 +19,11 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     
     // these define the parameters of our slider object (https://docs.juce.com/master/classSlider.html)
     slider1.setSliderStyle (juce::Slider::LinearBarVertical);
-    slider1.setRange (0.0f, 1.0f, 0.01f);
+    slider1.setRange (-60.0f, 1.0f, 0.01f); //set like this so it is measured in decibels
     slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 90, 10);
     slider1.setPopupDisplayEnabled (true, false, this);
     slider1.setTextValueSuffix (" Gain");
-    slider1.setValue(1.0f); //default value
+    slider1.setValue(-20.0f); //default value
     //slider1.setSkewFactor(0.2); //sets the sensitivity to be different across the slider
     
     // this function adds the slider to the editor
