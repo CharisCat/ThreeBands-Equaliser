@@ -15,19 +15,19 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     // editor's size to whatever you need it to be.
     
     //This is where our plugins editor size is set
-    setSize (200, 200);
+    setSize (200, 300);
     
-    // these define the parameters of our slider object
+    // these define the parameters of our slider object (https://docs.juce.com/master/classSlider.html)
     slider1.setSliderStyle (juce::Slider::LinearBarVertical);
-    slider1.setRange (0.0, 1.0, 0.01);
-    slider1.setTextBoxStyle (juce::Slider::NoTextBox, false, 90, 0);
+    slider1.setRange (0.0f, 1.0f, 0.01f);
+    slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 90, 10);
     slider1.setPopupDisplayEnabled (true, false, this);
     slider1.setTextValueSuffix (" Gain");
-    slider1.setValue(1.0);
-    slider1.setSkewFactor(0.2);
+    slider1.setValue(1.0f); //default value
+    //slider1.setSkewFactor(0.2); //sets the sensitivity to be different across the slider
     
     // this function adds the slider to the editor
-    addAndMakeVisible (&slider1);
+    addAndMakeVisible (&slider1); //this gain slider is a child component of the editor
     
     // add the listener to the slider
     slider1.addListener (this);
@@ -41,9 +41,8 @@ ThreeBandsAudioProcessorEditor::~ThreeBandsAudioProcessorEditor()
 void ThreeBandsAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
-    g.fillAll (getLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId));
+    g.fillAll (juce::Colours::rebeccapurple); //makes P U R P L E
 
-    g.setColour (juce::Colours::white);
     g.setFont (15.0f);
     g.drawFittedText ("Volume", getLocalBounds(), juce::Justification::centred, 1);
 }
