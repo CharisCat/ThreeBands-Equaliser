@@ -18,7 +18,8 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     setSize (200, 300);
     
     // these define the parameters of our slider object (https://docs.juce.com/master/classSlider.html)
-    slider1.setSliderStyle (juce::Slider::LinearBarVertical);
+    slider1.setSliderStyle (juce::Slider::LinearBar);
+    //slider1.setRotaryParameters(4.18879f, 5.23599f, true); //rotary dial parameters
     slider1.setRange (-60.0f, 1.0f, 0.01f); //set like this so it is measured in decibels
     slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 90, 10);
     slider1.setPopupDisplayEnabled (true, false, this);
@@ -53,7 +54,8 @@ void ThreeBandsAudioProcessorEditor::resized()
     // subcomponents in your editor..
     
     // sets the position and size of the slider with arguments (x, y, width, height)
-    slider1.setBounds (40, 30, 20, getHeight() - 60);
+    slider1.setBounds (40, 20, getWidth() - 60, 20);
+
 }
 
 void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
