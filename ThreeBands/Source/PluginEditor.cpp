@@ -15,13 +15,14 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     // editor's size to whatever you need it to be.
     
     //This is where our plugins editor size is set
-    setSize (200, 300);
+    setSize (580, 250);
     
+    //SLIDER 1
     // these define the parameters of our slider object (https://docs.juce.com/master/classSlider.html)
     slider1.setSliderStyle (juce::Slider::LinearBar);
     //slider1.setRotaryParameters(4.18879f, 5.23599f, true); //rotary dial parameters
     slider1.setRange (-60.0f, 1.0f, 0.01f); //set like this so it is measured in decibels
-    slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 90, 10);
+    slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
     slider1.setPopupDisplayEnabled (true, false, this);
     slider1.setTextValueSuffix (" Gain");
     slider1.setValue(-20.0f); //default value
@@ -32,6 +33,28 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     
     // add the listener to the slider
     slider1.addListener (this);
+    
+    //LOW FREQ
+    lowFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
+    lowFreq.setRange (-60.0f, 1.0f, 0.01f);
+    lowFreq.setValue (-20.0f);
+    lowFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    addAndMakeVisible (&lowFreq);
+    
+    //MID FREQ
+    midFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
+    midFreq.setRange (-60.0f, 1.0f, 0.01f);
+    midFreq.setValue (-20.0f);
+    midFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    addAndMakeVisible (&midFreq);
+    
+    //HIGH FREQ
+    highFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
+    highFreq.setRange (-60.0f, 1.0f, 0.01f);
+    highFreq.setValue (-20.0f);
+    highFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    addAndMakeVisible (&highFreq);
+    
 }
 
 ThreeBandsAudioProcessorEditor::~ThreeBandsAudioProcessorEditor()
@@ -45,7 +68,7 @@ void ThreeBandsAudioProcessorEditor::paint (juce::Graphics& g)
     g.fillAll (juce::Colours::rebeccapurple); //makes P U R P L E
 
     g.setFont (15.0f);
-    g.drawFittedText ("Volume", getLocalBounds(), juce::Justification::centred, 1);
+    //g.drawFittedText ("Volume", getLocalBounds(), juce::Justification::centred, 1);
 }
 
 void ThreeBandsAudioProcessorEditor::resized()
@@ -54,7 +77,11 @@ void ThreeBandsAudioProcessorEditor::resized()
     // subcomponents in your editor..
     
     // sets the position and size of the slider with arguments (x, y, width, height)
-    slider1.setBounds (40, 20, getWidth() - 60, 20);
+    slider1.setBounds (10, 20, 560, 20);
+    
+    lowFreq.setBounds (10, getHeight() / 2 - 50, 150, 150);
+    midFreq.setBounds (210, getHeight() / 2 - 50, 150, 150);
+    highFreq.setBounds (410, getHeight() / 2 - 50, 150, 150);
 
 }
 

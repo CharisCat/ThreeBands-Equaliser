@@ -33,7 +33,11 @@ private:
     
     juce::Slider slider1;
     
-    juce::Slider slider2;
+    juce::Slider lowFreq;
+    
+    juce::Slider midFreq;
+    
+    juce::Slider highFreq;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeBandsAudioProcessorEditor)
 };
