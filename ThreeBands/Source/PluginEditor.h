@@ -25,13 +25,15 @@ public:
 
 private:
     
-    juce::Slider slider1;
     void sliderValueChanged (juce::Slider* slider) override;
     
     // This reference is provided as a quick way for your editor to
     // access the processor object that created it.
     ThreeBandsAudioProcessor& audioProcessor;
-
+    
+    juce::Slider slider1;
+    
+    juce::Slider slider2;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (ThreeBandsAudioProcessorEditor)
 };

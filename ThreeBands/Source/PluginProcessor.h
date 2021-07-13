@@ -56,6 +56,7 @@ public:
     juce::IIRFilter lowShelf;
     juce::IIRFilter midPeaking;
     juce::IIRFilter highShelf;
+    
     float slider1Value = 400.0f; //This is the value that is set by slider1 in the GUI
     
 private:
