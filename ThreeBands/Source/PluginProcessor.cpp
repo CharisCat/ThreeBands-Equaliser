@@ -135,17 +135,18 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     double sampleRate = getSampleRate();
 
     // If we want to control our filter with a slider - it needs to be in the process block
-    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 500.0f,  2.0f, 2.0f));
-    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 750.0f, 2.0f, 0.1f));
-    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 1000.0f, 2.0f, 2.0f));
+    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 500.0f,  2.0f, juce::Decibels::decibelsToGain(lowFreqGain)));
+    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 750.0f, 2.0f, juce::Decibels::decibelsToGain(midFreqGain)));
+    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 1000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain)));
+    //highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(<#double sampleRate#>, <#double cutOffFrequency#>, <#double Q#>, <#float gainFactor#>));
     
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    //auto* channelData = buffer.getWritePointer (0);
-    //lowShelf.processSamples(channelData, buffer.getNumSamples());
-    //midPeaking.processSamples(channelData, buffer.getNumSamples());
-    //highShelf.processSamples(channelData, buffer.getNumSamples());
+    auto* channelData = buffer.getWritePointer (0);
+    lowShelf.processSamples(channelData, buffer.getNumSamples());
+    midPeaking.processSamples(channelData, buffer.getNumSamples());
+    highShelf.processSamples(channelData, buffer.getNumSamples());
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {

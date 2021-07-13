@@ -42,6 +42,7 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     lowFreq.setTextValueSuffix (" dB");
     lowFreq.setSkewFactor(2);
     addAndMakeVisible (&lowFreq);
+    lowFreq.addListener (this);
     
     //MID FREQ
     midFreq.setSliderStyle (juce::Slider::Rotary);
@@ -97,6 +98,21 @@ void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
     if (slider == &slider1)
     {
         audioProcessor.slider1Gain = slider1.getValue();
+    }
+    
+    if (slider == &lowFreq)
+    {
+        audioProcessor.lowFreqGain = lowFreq.getValue();
+    }
+    
+    if (slider == &midFreq)
+    {
+        audioProcessor.midFreqGain = midFreq.getValue();
+    }
+    
+    if (slider == &highFreq)
+    {
+        audioProcessor.highFreqGain = highFreq.getValue();
     }
     
 //I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.

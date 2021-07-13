@@ -58,6 +58,9 @@ public:
     juce::IIRFilter highShelf;
     
     float slider1Gain { 0.5f }; //This is the value that is set by slider1 in the GUI
+    float lowFreqGain { 0.5f };
+    float midFreqGain { 0.5f };
+    float highFreqGain { 0.5f };
     
 private:
     //==============================================================================
