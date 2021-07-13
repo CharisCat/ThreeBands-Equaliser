@@ -21,12 +21,12 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     // these define the parameters of our slider object (https://docs.juce.com/master/classSlider.html)
     slider1.setSliderStyle (juce::Slider::LinearBar);
     //slider1.setRotaryParameters(4.18879f, 5.23599f, true); //rotary dial parameters
-    slider1.setRange (-60.0f, 1.0f, 0.01f); //set like this so it is measured in decibels
+    slider1.setRange (-60.0f, 12.0f, 0.01f); //set like this so it is measured in decibels
     slider1.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
     slider1.setPopupDisplayEnabled (true, false, this);
-    slider1.setTextValueSuffix (" Gain");
-    slider1.setValue(-20.0f); //default value
-    //slider1.setSkewFactor(0.2); //sets the sensitivity to be different across the slider
+    slider1.setTextValueSuffix (" dB Gain");
+    slider1.setValue(0.0f); //default value
+    slider1.setSkewFactor(3); //sets the sensitivity to be different across the slider, higher numbers are skewed towards high end. numbers under one skew towards low end.
     
     // this function adds the slider to the editor
     addAndMakeVisible (&slider1); //this gain slider is a child component of the editor
@@ -35,24 +35,30 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     slider1.addListener (this);
     
     //LOW FREQ
-    lowFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
-    lowFreq.setRange (-60.0f, 1.0f, 0.01f);
-    lowFreq.setValue (-20.0f);
+    lowFreq.setSliderStyle (juce::Slider::Rotary);
+    lowFreq.setRange (-30.0f, 12.0f, 0.01f); //lowers by up to 30db, raises by up to 12db (thought that was fairly appropriate for EQ adjustments
+    lowFreq.setValue (0.0f);
     lowFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    lowFreq.setTextValueSuffix (" dB");
+    lowFreq.setSkewFactor(2);
     addAndMakeVisible (&lowFreq);
     
     //MID FREQ
-    midFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
-    midFreq.setRange (-60.0f, 1.0f, 0.01f);
-    midFreq.setValue (-20.0f);
+    midFreq.setSliderStyle (juce::Slider::Rotary);
+    midFreq.setRange (-30.0f, 12.0f, 0.01f);
+    midFreq.setValue (0.0f);
     midFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    midFreq.setTextValueSuffix (" dB");
+    midFreq.setSkewFactor(2);
     addAndMakeVisible (&midFreq);
     
     //HIGH FREQ
-    highFreq.setSliderStyle (juce::Slider::RotaryHorizontalDrag);
-    highFreq.setRange (-60.0f, 1.0f, 0.01f);
-    highFreq.setValue (-20.0f);
+    highFreq.setSliderStyle (juce::Slider::Rotary);
+    highFreq.setRange (-30.0f, 12.0f, 0.01f);
+    highFreq.setValue (0.0f);
     highFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
+    highFreq.setTextValueSuffix (" dB");
+    highFreq.setSkewFactor(2);
     addAndMakeVisible (&highFreq);
     
 }
