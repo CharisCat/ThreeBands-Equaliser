@@ -53,9 +53,14 @@ public:
     void getStateInformation (juce::MemoryBlock& destData) override;
     void setStateInformation (const void* data, int sizeInBytes) override;
 
-    juce::IIRFilter lowShelf;
-    juce::IIRFilter midPeaking;
-    juce::IIRFilter highShelf;
+    juce::IIRFilter lowShelfLeft;
+    juce::IIRFilter lowShelfRight;
+    
+    juce::IIRFilter midPeakingLeft;
+    juce::IIRFilter midPeakingRight;
+    
+    juce::IIRFilter highShelfLeft;
+    juce::IIRFilter highShelfRight;
     
     float slider1Gain { 0.5f }; //This is the value that is set by slider1 in the GUI
     float lowFreqGain { 0.5f };

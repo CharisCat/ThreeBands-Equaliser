@@ -139,9 +139,18 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     double sampleRate = getSampleRate();
 
     //FILTERS
-    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 200.0f,  2.0f, juce::Decibels::decibelsToGain(lowFreqGain))); //Cut off of 200Hz to hit referral assessment guidelines
-    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 1000.0f, 0.4f, juce::Decibels::decibelsToGain(midFreqGain))); //Q of 0.4 and center frequency of 1000Hz to hit refferal assessment guidelines
-    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 5000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain))); //Cut off of 5KHz to hit referral assessment guidelines
+    
+    //LOW SHELF
+    lowShelfLeft.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 200.0f,  2.0f, juce::Decibels::decibelsToGain(lowFreqGain))); //Cut off of 200Hz to hit referral assessment guidelines
+    lowShelfRight.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 200.0f, 2.0f, juce::Decibels::decibelsToGain(lowFreqGain)));
+    
+    //MID PEAK
+    midPeakingLeft.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 1000.0f, 0.4f, juce::Decibels::decibelsToGain(midFreqGain))); //Q of 0.4 and center frequency of 1000Hz to hit refferal assessment guidelines
+    midPeakingRight.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 1000.0f, 0.4f, juce::Decibels::decibelsToGain(midFreqGain)));
+    
+    //HIGH SHELF
+    highShelfLeft.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 5000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain))); //Cut off of 5KHz to hit referral assessment guidelines
+    highShelfRight.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 5000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain))); //Cut off of 5KHz to hit referral assessment guidelines
     //highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(<#double sampleRate#>, <#double cutOffFrequency#>, <#double Q#>, <#float gainFactor#>));
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
@@ -157,9 +166,18 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
         buffer.clear (i, 0, buffer.getNumSamples());
     
-    lowShelf.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
-    midPeaking.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
-    highShelf.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    //LOW SHELF
+    lowShelfLeft.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    lowShelfRight.processSamples(buffer.getWritePointer(1), buffer.getNumSamples());
+    
+    //MID PEAK
+    midPeakingLeft.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    midPeakingRight.processSamples(buffer.getWritePointer(1), buffer.getNumSamples());
+    
+    //HIGH SHELF
+    highShelfLeft.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    highShelfRight.processSamples(buffer.getWritePointer(1), buffer.getNumSamples());
+    
 }
 
 //==============================================================================
