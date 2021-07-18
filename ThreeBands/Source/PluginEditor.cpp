@@ -52,6 +52,7 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     midFreq.setTextValueSuffix (" dB");
     midFreq.setSkewFactor(2);
     addAndMakeVisible (&midFreq);
+    midFreq.addListener (this);
     
     //HIGH FREQ
     highFreq.setSliderStyle (juce::Slider::Rotary);
@@ -61,6 +62,7 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     highFreq.setTextValueSuffix (" dB");
     highFreq.setSkewFactor(2);
     addAndMakeVisible (&highFreq);
+    highFreq.addListener (this);
     
 }
 
@@ -73,7 +75,8 @@ void ThreeBandsAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::rebeccapurple); //makes P U R P L E
-
+    //g.fillAll (juce::Colours::black);
+    
     g.setFont (15.0f);
     //g.drawFittedText ("Volume", getLocalBounds(), juce::Justification::centred, 1);
 }
@@ -94,26 +97,32 @@ void ThreeBandsAudioProcessorEditor::resized()
 
 void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
+
+   /* audioProcessor.slider1Gain = slider1.getValue();
+    audioProcessor.lowFreqGain = lowFreq.getValue();
+    audioProcessor.midFreqGain = midFreq.getValue();
+    audioProcessor.highFreqGain = highFreq.getValue(); */
     
     if (slider == &slider1)
     {
         audioProcessor.slider1Gain = slider1.getValue();
     }
     
-    if (slider == &lowFreq)
+    else if (slider == &lowFreq)
     {
         audioProcessor.lowFreqGain = lowFreq.getValue();
     }
     
-    if (slider == &midFreq)
+    else if (slider == &midFreq)
     {
         audioProcessor.midFreqGain = midFreq.getValue();
     }
     
-    if (slider == &highFreq)
+    else if (slider == &highFreq)
     {
         audioProcessor.highFreqGain = highFreq.getValue();
     }
     
 //I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.
+    
 }

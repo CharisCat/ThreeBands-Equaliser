@@ -93,6 +93,10 @@ void ThreeBandsAudioProcessor::prepareToPlay (double sampleRate, int samplesPerB
 {
     // Use this method as the place to do any pre-playback
     // initialisation that you need..
+    
+    /* lowShelf.setCoefficients(juce::IIRCoefficients::makeLowPass(sampleRate, 150.0f));
+    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 1000.0f, 0.4f, juce::Decibels::decibelsToGain(midFreqGain)));
+    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 5000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain))); */
 }
 
 void ThreeBandsAudioProcessor::releaseResources()
@@ -134,19 +138,11 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
     auto totalNumOutputChannels = getTotalNumOutputChannels();
     double sampleRate = getSampleRate();
 
-    // If we want to control our filter with a slider - it needs to be in the process block
-    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 500.0f,  2.0f, juce::Decibels::decibelsToGain(lowFreqGain)));
-    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 750.0f, 2.0f, juce::Decibels::decibelsToGain(midFreqGain)));
-    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 1000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain)));
+    //FILTERS
+    lowShelf.setCoefficients(juce::IIRCoefficients::makeLowShelf(sampleRate, 200.0f,  2.0f, juce::Decibels::decibelsToGain(lowFreqGain))); //Cut off of 200Hz to hit referral assessment guidelines
+    midPeaking.setCoefficients(juce::IIRCoefficients::makePeakFilter(sampleRate, 1000.0f, 0.4f, juce::Decibels::decibelsToGain(midFreqGain))); //Q of 0.4 and center frequency of 1000Hz to hit refferal assessment guidelines
+    highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(sampleRate, 5000.0f, 2.0f, juce::Decibels::decibelsToGain(highFreqGain))); //Cut off of 5KHz to hit referral assessment guidelines
     //highShelf.setCoefficients(juce::IIRCoefficients::makeHighShelf(<#double sampleRate#>, <#double cutOffFrequency#>, <#double Q#>, <#float gainFactor#>));
-    
-    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
-        buffer.clear (i, 0, buffer.getNumSamples());
-    
-    auto* channelData = buffer.getWritePointer (0);
-    lowShelf.processSamples(channelData, buffer.getNumSamples());
-    midPeaking.processSamples(channelData, buffer.getNumSamples());
-    highShelf.processSamples(channelData, buffer.getNumSamples());
 
     for (int channel = 0; channel < totalNumInputChannels; ++channel)
     {
@@ -156,16 +152,14 @@ void ThreeBandsAudioProcessor::processBlock (juce::AudioBuffer<float>& buffer, j
         {
             channelData [sample] = channelData[sample] * juce::Decibels::decibelsToGain(slider1Gain); //multiplies samples by the slider value to attenuate volume, measured in decibels
         }
-        
-        
-        
-        //buffer.applyGain (channel, 0, buffer.getNumSamples(), 0.5*channel);
-        // This is kind of cheating but it technically creates an EQ setting.
-        // I'm not sure if they're meant to be effected separately for the task
-        
-
-        // ..do something to the data...
     }
+    
+    for (auto i = totalNumInputChannels; i < totalNumOutputChannels; ++i)
+        buffer.clear (i, 0, buffer.getNumSamples());
+    
+    lowShelf.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    midPeaking.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
+    highShelf.processSamples(buffer.getWritePointer(0), buffer.getNumSamples());
 }
 
 //==============================================================================
