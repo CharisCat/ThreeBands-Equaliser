@@ -75,7 +75,6 @@ void ThreeBandsAudioProcessorEditor::paint (juce::Graphics& g)
 {
     // (Our component is opaque, so we must completely fill the background with a solid colour)
     g.fillAll (juce::Colours::rebeccapurple); //makes P U R P L E
-    //g.fillAll (juce::Colours::black);
     
     g.setFont (15.0f);
     //g.drawFittedText ("Volume", getLocalBounds(), juce::Justification::centred, 1);
@@ -97,11 +96,6 @@ void ThreeBandsAudioProcessorEditor::resized()
 
 void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
 {
-
-   /* audioProcessor.slider1Gain = slider1.getValue();
-    audioProcessor.lowFreqGain = lowFreq.getValue();
-    audioProcessor.midFreqGain = midFreq.getValue();
-    audioProcessor.highFreqGain = highFreq.getValue(); */
     
     if (slider == &slider1)
     {
@@ -123,6 +117,6 @@ void ThreeBandsAudioProcessorEditor::sliderValueChanged (juce::Slider* slider)
         audioProcessor.highFreqGain = highFreq.getValue();
     }
     
-//I had to change this to audioProcessor instead of processor, I don't understand why but found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so.
+//I had to change this to audioProcessor instead of processor, I found advice to do so here (https://forum.juce.com/t/no-member-named-gain-in-juce-audioprocessor-error/40655) and it worked, so. I think it is because it is declared as audioProcessor elsewhere instead of processor, perhaps different JUCE version?
     
 }
