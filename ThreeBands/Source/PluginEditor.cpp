@@ -36,7 +36,7 @@ ThreeBandsAudioProcessorEditor::ThreeBandsAudioProcessorEditor (ThreeBandsAudioP
     
     //LOW FREQ
     lowFreq.setSliderStyle (juce::Slider::Rotary);
-    lowFreq.setRange (-30.0f, 12.0f, 0.01f); //lowers by up to 30db, raises by up to 12db (thought that was fairly appropriate for EQ adjustments
+    lowFreq.setRange (-30.0f, 12.0f, 0.01f); //lowers by up to 30db, raises by up to 12db (thought that was fairly appropriate for EQ adjustments)
     lowFreq.setValue (0.0f);
     lowFreq.setTextBoxStyle (juce::Slider::TextBoxBelow, false, 150, 25);
     lowFreq.setTextValueSuffix (" dB");
